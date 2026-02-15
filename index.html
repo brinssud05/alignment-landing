@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>alignment — Guided journaling for subconscious pattern work</title>
+  <meta name="description" content="alignment helps you uncover subconscious patterns through guided journaling, self-reflection, and gentle daily check-ins.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --sand-bg: #faf9f7;
+      --sand-text: #4d473e;
+      --sage: #627362;
+      --sage-hover: #4d5b4d;
+      --warmth-bg: #fdf8f6;
+      --warmth-accent: #cb7f64;
+      --clay-bg: #f9f6f4;
+      --clay-accent: #805a4b;
+      --radius-btn: 12px;
+      --radius-card: 16px;
+      --radius-chip: 999px;
+      --radius-ghost: 8px;
+      --shadow-sm: 0 1px 3px rgba(77, 71, 62, 0.06), 0 1px 2px rgba(77, 71, 62, 0.04);
+      --shadow-md: 0 4px 12px rgba(77, 71, 62, 0.08), 0 2px 4px rgba(77, 71, 62, 0.04);
+      --max-width: 896px;
+      --page-px: 24px;
+      --font-body: 'Outfit', sans-serif;
+      --font-heading: 'Fraunces', serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-weight: 400;
+      color: var(--sand-text);
+      background-color: var(--sand-bg);
+      line-height: 1.7;
+      font-size: 17px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding-left: var(--page-px);
+      padding-right: var(--page-px);
+    }
+
+    /* ——— Header ——— */
+    .header {
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      background: rgba(250, 249, 247, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 100;
+      border-bottom: 1px solid rgba(77, 71, 62, 0.06);
+    }
+
+    .header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 1.35rem;
+      letter-spacing: -0.01em;
+      color: var(--sand-text);
+    }
+
+    .nav {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav a {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--sand-text);
+      opacity: 0.72;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav a:hover {
+      opacity: 1;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--sand-text);
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: all 0.25s ease;
+    }
+
+    /* ——— Buttons ——— */
+    .btn-primary {
+      display: inline-block;
+      background: var(--sage);
+      color: #fff;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 14px 32px;
+      border-radius: var(--radius-btn);
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+      text-align: center;
+    }
+
+    .btn-primary:hover {
+      background: var(--sage-hover);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-ghost {
+      display: inline-block;
+      background: transparent;
+      color: var(--sage);
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 14px 32px;
+      border-radius: var(--radius-ghost);
+      border: 1.5px solid var(--sage);
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+      text-align: center;
+    }
+
+    .btn-ghost:hover {
+      background: var(--sage);
+      color: #fff;
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ——— Hero ——— */
+    .hero {
+      padding: 80px 0 48px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-weight: 400;
+      font-size: clamp(2rem, 5vw, 2.85rem);
+      line-height: 1.28;
+      letter-spacing: -0.02em;
+      max-width: 720px;
+      margin: 0 auto 36px;
+      color: var(--sand-text);
+    }
+
+    .hero-sub {
+      margin-bottom: 44px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-line {
+      text-align: center;
+    }
+
+    .hero-line-main {
+      display: block;
+      font-size: 1.08rem;
+      font-weight: 400;
+      color: var(--sand-text);
+      line-height: 1.5;
+    }
+
+    .hero-line-desc {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--sand-text);
+      opacity: 0.56;
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ——— Section shared ——— */
+    .section {
+      padding: 48px 0;
+    }
+
+    .section-lg {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-weight: 400;
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      letter-spacing: -0.015em;
+      margin-bottom: 12px;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      font-weight: 300;
+      font-size: 1.02rem;
+      opacity: 0.72;
+      margin-bottom: 48px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ——— Value Props ——— */
+    .value-section {
+      padding: 48px 0 24px;
+    }
+
+    .value-intro {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 40px;
+    }
+
+    .value-intro p {
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.75;
+      opacity: 0.82;
+    }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .value-card {
+      background: #fff;
+      border-radius: var(--radius-card);
+      padding: 28px 24px 24px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s ease;
+    }
+
+    .value-card:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .value-card .v-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      font-size: 1.15rem;
+    }
+
+    .value-card:nth-child(1) .v-icon { background: rgba(98, 115, 98, 0.1); }
+    .value-card:nth-child(2) .v-icon { background: rgba(203, 127, 100, 0.12); }
+    .value-card:nth-child(3) .v-icon { background: rgba(128, 90, 75, 0.1); }
+
+    .value-card h3 {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+
+    .value-card p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      opacity: 0.78;
+      line-height: 1.6;
+    }
+
+    .foundations {
+      text-align: center;
+      margin-top: 36px;
+      padding-top: 24px;
+    }
+
+    .foundations p {
+      font-size: 0.88rem;
+      font-weight: 400;
+      opacity: 0.52;
+      margin-bottom: 12px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-block;
+      background: var(--clay-bg);
+      color: var(--sand-text);
+      font-size: 0.82rem;
+      font-weight: 400;
+      padding: 6px 16px;
+      border-radius: var(--radius-chip);
+      opacity: 0.72;
+    }
+
+    /* ——— Who it's for ——— */
+    .who-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .who-card {
+      background: #fff;
+      border-radius: var(--radius-card);
+      padding: 28px 28px 24px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s ease;
+    }
+
+    .who-card:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .who-card .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 1.1rem;
+    }
+
+    .who-card:nth-child(1) .icon { background: rgba(98, 115, 98, 0.1); }
+    .who-card:nth-child(2) .icon { background: rgba(203, 127, 100, 0.12); }
+    .who-card:nth-child(3) .icon { background: rgba(128, 90, 75, 0.1); }
+    .who-card:nth-child(4) .icon { background: rgba(98, 115, 98, 0.1); }
+
+    .who-card h3 {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 1.08rem;
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+
+    .who-card p {
+      font-size: 0.93rem;
+      font-weight: 300;
+      opacity: 0.78;
+      line-height: 1.6;
+    }
+
+    /* ——— How it works ——— */
+    .how-section {
+      background: var(--clay-bg);
+      border-radius: var(--radius-card);
+      padding: 56px 40px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      counter-reset: step-counter;
+    }
+
+    .step {
+      text-align: center;
+      counter-increment: step-counter;
+    }
+
+    .step-num {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--sage);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 1rem;
+      margin: 0 auto 16px;
+    }
+
+    .step h3 {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      opacity: 0.72;
+      line-height: 1.55;
+    }
+
+    /* ——— Boundary card ——— */
+    .boundary-card {
+      background: var(--warmth-bg);
+      border-radius: var(--radius-card);
+      padding: 40px 44px;
+      box-shadow: var(--shadow-sm);
+      border-left: 3px solid var(--warmth-accent);
+    }
+
+    .boundary-card h2 {
+      font-family: var(--font-heading);
+      font-weight: 400;
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      color: var(--clay-accent);
+    }
+
+    .boundary-card p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.75;
+      margin-bottom: 12px;
+      opacity: 0.85;
+    }
+
+    .boundary-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ——— Final CTA ——— */
+    .final-cta {
+      text-align: center;
+      padding: 80px 0 48px;
+    }
+
+    .final-cta .section-title {
+      margin-bottom: 16px;
+    }
+
+    .final-cta .cta-desc {
+      font-weight: 300;
+      font-size: 1.02rem;
+      opacity: 0.72;
+      margin-bottom: 32px;
+    }
+
+    .privacy-note {
+      margin-top: 20px;
+      font-size: 0.82rem;
+      font-weight: 300;
+      opacity: 0.55;
+    }
+
+    /* ——— Footer ——— */
+    .footer {
+      padding: 40px 0;
+      border-top: 1px solid rgba(77, 71, 62, 0.08);
+      text-align: center;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-size: 0.85rem;
+      font-weight: 300;
+      opacity: 0.55;
+    }
+
+    .footer-link {
+      font-size: 0.85rem;
+      font-weight: 400;
+      opacity: 0.55;
+      transition: opacity 0.2s ease;
+    }
+
+    .footer-link:hover {
+      opacity: 0.85;
+    }
+
+    /* ——— Divider ——— */
+    .divider {
+      width: 48px;
+      height: 2px;
+      background: var(--sage);
+      opacity: 0.2;
+      margin: 0 auto;
+      border-radius: 2px;
+    }
+
+    /* ——— Mobile ——— */
+    @media (max-width: 768px) {
+      .nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(250, 249, 247, 0.98);
+        backdrop-filter: blur(12px);
+        flex-direction: column;
+        gap: 0;
+        padding: 8px 0 16px;
+        border-bottom: 1px solid rgba(77, 71, 62, 0.08);
+      }
+
+      .nav.open {
+        display: flex;
+      }
+
+      .nav a {
+        padding: 12px var(--page-px);
+        font-size: 1rem;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+
+      .hero {
+        padding: 56px 0 40px;
+      }
+
+      .hero h1 {
+        font-size: 1.85rem;
+      }
+
+      .who-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .value-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .how-section {
+        padding: 40px 24px;
+      }
+
+      .steps {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px 20px;
+      }
+
+      .boundary-card {
+        padding: 32px 28px;
+      }
+
+      .hero-ctas {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-ctas .btn-primary {
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .steps {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="#" class="brand" aria-label="alignment home">alignment</a>
+      <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" onclick="toggleNav()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="nav" role="navigation" aria-label="Main navigation">
+        <a href="#how">How it works</a>
+        <a href="#who">Who it's for</a>
+        <a href="#early-access">Early access</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero container">
+    <h1>Guided journaling to uncover the subconscious patterns running your life.</h1>
+    <div class="hero-sub">
+      <div class="hero-line">
+        <span class="hero-line-main">Notice your loops.</span>
+        <span class="hero-line-desc">Guided journaling prompts help you name what keeps repeating.</span>
+      </div>
+      <div class="hero-line">
+        <span class="hero-line-main">Understand what feels unsafe.</span>
+        <span class="hero-line-desc">AI-powered analysis surfaces the subconscious beliefs underneath.</span>
+      </div>
+      <div class="hero-line">
+        <span class="hero-line-main">Shift what has been quietly shaping your choices.</span>
+        <span class="hero-line-desc">Personalized affirmations and somatic exercises help you regulate and return.</span>
+      </div>
+    </div>
+    <div class="hero-ctas">
+      <a href="https://forms.gle/QhjUFhBmChJxZoxXA" target="_blank" rel="noopener noreferrer" class="btn-primary">Join Early Access</a>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <div class="divider" style="margin-top: 32px; margin-bottom: 32px;"></div>
+
+  <!-- What you get -->
+  <section class="value-section container">
+    <div class="value-intro">
+      <h2 class="section-title">Awareness is the first step. Regulation makes it stick.</h2>
+      <p style="margin-top: 16px;">When your nervous system is regulated, you can think more clearly, make aligned decisions, and actually follow through on what matters to you. alignment pairs insight with action.</p>
+    </div>
+    <div class="value-grid">
+      <div class="value-card">
+        <div class="v-icon">&#9671;</div>
+        <h3>See your subconscious blocks</h3>
+        <p>AI-powered analysis surfaces the patterns and protective beliefs quietly shaping your choices. Each block includes evidence from your own journal entries.</p>
+      </div>
+      <div class="value-card">
+        <div class="v-icon">&#9676;</div>
+        <h3>Personalized affirmations for each block</h3>
+        <p>For every pattern the app finds, you receive bridging affirmations and return statements that are specific, grounded, and designed to feel believable.</p>
+      </div>
+      <div class="value-card">
+        <div class="v-icon">&#10041;</div>
+        <h3>Somatic exercises you can do in 2 to 10 minutes</h3>
+        <p>The app recommends breathwork, somatic resets, and grounding exercises matched to each block. Short enough to fit into your day, with guided steps you can follow right in the app.</p>
+      </div>
+    </div>
+    <div class="foundations">
+      <p>Informed by</p>
+      <div class="chips">
+        <span class="chip">Subconscious pattern work</span>
+        <span class="chip">Internal Family Systems</span>
+        <span class="chip">Nervous system regulation</span>
+        <span class="chip">Cognitive reframing</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who it's for -->
+  <section class="section-lg container" id="who">
+    <h2 class="section-title">Who this is for</h2>
+    <p class="section-subtitle">For people who are done with surface-level advice and ready to look underneath.</p>
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="icon">&#10047;</div>
+        <h3>You keep landing in the same loop</h3>
+        <p>The same patterns show up in your relationships, career, or habits. You can see them happening, and you want to understand the source.</p>
+      </div>
+      <div class="who-card">
+        <div class="icon">&#9673;</div>
+        <h3>You want clarity and self-trust</h3>
+        <p>You are looking for deeper understanding of your own mind. You want to make decisions from a grounded place, with more awareness of what drives you.</p>
+      </div>
+      <div class="who-card">
+        <div class="icon">&#9670;</div>
+        <h3>You want structure and better questions</h3>
+        <p>Free-form journaling feels scattered. You want prompts that guide you somewhere real, with a process you can return to.</p>
+      </div>
+      <div class="who-card">
+        <div class="icon">&#9702;</div>
+        <h3>You want a private, self-led space</h3>
+        <p>You are not looking for someone to tell you what to do. You want a tool that helps you think more clearly and move at your own pace.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section-lg container" id="how">
+    <div class="how-section">
+      <h2 class="section-title" style="margin-bottom: 40px;">How it works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Name what you want</h3>
+          <p>Start with a goal that matters to you. Something real you are working toward.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Surface what feels unsafe</h3>
+          <p>Guided prompts help you explore the resistance and discomfort underneath your goals.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Trace the belief underneath</h3>
+          <p>AI analysis draws on subconscious pattern work, Internal Family Systems, and nervous system science to map the loops shaping your choices.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h3>Give yourself permission</h3>
+          <p>Receive personalized return statements and gentle exercises to practice daily.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Boundary card -->
+  <section class="section container">
+    <div class="boundary-card">
+      <h2>A note on what this is</h2>
+      <p>alignment is a self-reflection tool for journaling and self-awareness. It is designed to help you notice patterns and build a relationship with your own thinking.</p>
+      <p>It is not therapy, diagnosis, or a substitute for professional care.</p>
+      <p>If a prompt feels overwhelming, it is okay to pause, skip it, or seek support from someone you trust.</p>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="final-cta container" id="early-access">
+    <h2 class="section-title">Join the early access list</h2>
+    <p class="cta-desc">You will receive prompts and updates about alignment.</p>
+    <a href="https://forms.gle/QhjUFhBmChJxZoxXA" target="_blank" rel="noopener noreferrer" class="btn-primary">Join Early Access</a>
+    <p class="privacy-note">Your email is only used to send updates about alignment.</p>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-copy">&copy; alignment</span>
+        <a href="#" class="footer-link">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleNav() {
+      var nav = document.querySelector('.nav');
+      var btn = document.querySelector('.nav-toggle');
+      var isOpen = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen);
+    }
+
+    // Close mobile nav when a link is clicked
+    document.querySelectorAll('.nav a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        var nav = document.querySelector('.nav');
+        var btn = document.querySelector('.nav-toggle');
+        nav.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+
+</body>
+</html>
